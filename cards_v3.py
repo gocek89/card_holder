@@ -1,6 +1,8 @@
 from faker import Faker
 fake = Faker('pl_PL')
 
+# BaseContact
+
 
 class BaseContact:
     def __init__(self, number, first_name, last_name, privat_number, e_mail):
@@ -22,6 +24,14 @@ class BaseContact:
         return sum
 
 
+def create_base_contact():
+    cards_list.append(BaseContact(
+        number=number, first_name=fake.first_name(), last_name=fake.last_name(),
+        privat_number=fake.phone_number(), e_mail=fake.email()))
+
+# businessContact
+
+
 class BusinessContact(BaseContact):
     def __init__(self, position, company, work_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,6 +46,12 @@ class BusinessContact(BaseContact):
         return f'  \n{self.next_number} / {self.first_name} / {self.last_name} / {self.company} / {self.position} / {self.work_number} / {self.e_mail}'
 
 
+def create_busines_contact():
+    cards_list.append(BusinessContact(number=number, first_name=fake.first_name(), last_name=fake.last_name(
+    ), privat_number=None, work_number=fake.phone_number(), e_mail=fake.company_email(), position=fake.job(), company=fake.company(),))
+
+
+# Variables
 cards_list = []
 number = 0
 choose = 0
@@ -43,17 +59,12 @@ choose = 0
 choose = int(input(
     "Wybierz czy mam wyświetlić wizytówki prywatne czy słubowe.Dla prywatnej wybiez 1 dla słubowej 2\n"))
 if choose == 1:
-    def create_base_contact():
-        cards_list.append(BaseContact(
-            number=number, first_name=fake.first_name(), last_name=fake.last_name(),
-            privat_number=fake.phone_number(), e_mail=fake.email()))
+    create_base_contact()
     for i in range(int(input('Jaką Liczbę kontatków wygenerować?"\n'))):
         create_base_contact()
         number += 1
 else:
-    def create_busines_contact():
-        cards_list.append(BusinessContact(number=number, first_name=fake.first_name(), last_name=fake.last_name(), privat_number=None,
-                                          work_number=fake.phone_number(), e_mail=fake.company_email(), position=fake.job(), company=fake.company(),))
+    create_busines_contact()
     for i in range(int(input('Jaką Liczbę kontatków wygenerować?"\n'))):
         create_busines_contact()
         number += 1
@@ -73,4 +84,4 @@ if ring == "T":
         input('Podaj nr kontaktu z którym chcesz się skontaktować\n'))]
     print(phone.contact())
 else:
-    print('Nie został wybrany zaden kontakt w celu wybrania nr')
+    print('Nie został wybrany zaden kontakt w celu wybrania nr..')
