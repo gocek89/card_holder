@@ -1,3 +1,4 @@
+import time
 from faker import Faker
 fake = Faker('pl_PL')
 
@@ -59,12 +60,10 @@ choose = 0
 choose = int(input(
     "Wybierz czy mam wyświetlić wizytówki prywatne czy słubowe.Dla prywatnej wybiez 1 dla słubowej 2\n"))
 if choose == 1:
-    create_base_contact()
     for i in range(int(input('Jaką Liczbę kontatków wygenerować?"\n'))):
         create_base_contact()
         number += 1
 else:
-    create_busines_contact()
     for i in range(int(input('Jaką Liczbę kontatków wygenerować?"\n'))):
         create_busines_contact()
         number += 1
